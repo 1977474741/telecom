@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script>
+			var elem = document.createElement('meta');
+			var h = window.screen.width / 750;
+			elem.name = 'viewport';
+			elem.content = 'width=device-width,user-scalable=no,initial-scale=' + h;
+			document.getElementsByTagName('head')[0].appendChild(elem);
+		</script>
+		<!-- <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"> -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>体验你的智慧生活</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/css/swiper.min.css">
+		<link href="css/index.css?v=2" rel="stylesheet" type="text/css" />
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	    <script src="js/sha.js"></script>
+	    <script src="js/weixin_share.js"></script>
+	</head>
+ 
+	<body>
+		<script>
+		    var wx_shareoptions={
+		        //appid:'wxa7c8ef3312062af3',//默认使用的微信appid
+		        shareTitle:'看看你的智慧家庭少了什么?',
+		        shareDesc:'家里还在用遥控器？out了！书房厨房没有信号？不给力啊！照片还往硬盘里拷？落后了！',
+		        shareImgUrl:'images/share_icon.jpg',//分享图片的相对路径
+		        shareLink:"index.html"//分享给好友的连接
+		    }
+		    var wx_share_obj=new window.weixin_share(wx_shareoptions);
+		    wx_share_obj.runwx("wx_share_obj");
+		</script>
+		<img class="lock_screen" src="images/lock_screen.jpg">
+		<main :style="{width:vh+'px',height:vw+'px'}">
+			<!-- 音乐图标 -->
+			<div class="music_container hide" :class="{show:page1.progress==100}" @click="isWeiXin(),music_flag=!music_flag,if_wx=true">
+				<i class="music_icon" :class="{animate:music_flag}"></i>
+			</div>
+			<!-- 了解更多遮罩 -->
+			<div class="explain animation_explain hide" @click="page4.show_explain=false" :class="{show:page4.show_explain}">
+				<!-- <img src="images/page4/explain.png"> -->
+			</div>
+			<!-- 分享遮罩 -->
+			<div class="hide p17_img6" :class="{show:page14.share}" @click="page14.share=false">
+				<!-- <img src="images/share.png" style="height: 100%;width:100%;" /> -->
+			</div>
+			<!-- 开启音乐遮罩 -->
+			<div class="music_help hide" @click="isWeiXin(),if_wx=true" :class="{show:!if_wx&&page1.progress==100}"></div>
+			<!-- 右箭头 -->
+			<i class="arrow arrow_right hide" @click="slideNext(),page4.show_explain=false" :class="{show:arrow_right}"></i>
+			<!-- 左箭头 -->
+			<i class="arrow arrow_left hide" @click="slidePrev()" :class="{show:arrow_left}"></i>
+
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide page1">
+						<div class="bg_content" :style="{'width':page1.progress+'%'}">
+							<div class="bg"></div>
+						</div>
+						<h1 style="top:65%;" class="hide" :class="{show:page1.progress_num_show}" v-text="page1.progress+'%'"></h1>
+					</div>
+					<div class="swiper-slide page2" :style="{'background-size':vh*7-1+'px '+vw+'px'}" :class="{animation_bg_show:page2.start,animation_bg_hide:page2.start_2}">
+						<img src="images/page2/prospect_1.png" :class={animation_prospect_narrow1:page2.start} class="prospect prospect_1">
+						<img src="images/page2/prospect_2.png" :class={animation_prospect_narrow2:page2.start} class="prospect prospect_2">
+						<img src="images/page2/prospect_3.png" :class={animation_prospect_narrow3:page2.start} class="prospect prospect_3">
+						<img src="images/page2/prospect_4.png" :class={animation_prospect_narrow4:page2.start} class="prospect prospect_4">
+						<img src="images/page2/bg7.jpg" :class="{show:page2.start_3}" class="hide bg7 animation_bg_new">
+                        <img src="images/page2/iphone.png" @click="slideNext()" :class="{show:page2.show_iphone}" class="hide prospect iphone">
+						<img src="images/page2/icon.png" class="hide iphone_icon" :class="{show:page2.show_iphone}">
+						<img src="images/page2/icon2.png" class="hide iphone_light" :class="{show:page2.show_iphone}"/>
+						<img src="images/page2/text.png" @click="slideNext()" :class="{show:page2.show_text}" class="hide prospect text">
+					</div>
+					<div class="swiper-slide page3">
+						<img class="hide wifi_text" :class="{show:page3.show_wifi_text}" src="images/page3/wifi_text.png">
+						<img class="hide call" @click="slideNext()" :class="{show:page3.show_call}" src="images/page3/call.png">
+					</div>
+					<div class="swiper-slide page4">
+						<img src="images/page4/text.png" class="text" :class="{text_animation:page4.text}">
+						<img src="images/page4/bg2.jpg" class="bg2 hide" :class="{show:page4.show_bg2}">
+						<img class="product hide" src="images/page4/product.png" :class="{show:page4.show_product}">
+						<img class="button hide" src="images/page4/button.png" :class="{show:page4.show_button}" @click="page4.show_explain=true">
+						
+						<div class="scenes hide" :class="{show:page4.show_scenes}">
+							<div class="scene scene1 hide" :class="{show:page4.show_scene_index==1}">
+							</div>
+							<div class="scene scene2 hide" :class="{show:page4.show_scene_index==2}">
+							</div>
+							<div class="scene scene3 hide" :class="{show:page4.show_scene_index==3}">
+							</div>
+							<div class="scene scene4 hide" :class="{show:page4.show_scene_index==4}">
+							</div>
+							<div class="scene scene5 hide" :class="{show:page4.show_scene_index==5,scene1_enlarge:page4.scene1_enlarge}">
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide page5">
+						<img class="hide text" src="images/page5/text.png" :class="{show:page5.show_text}">
+						<img class="hide button" src="images/page5/button.png" :class="{show:page5.show_button}" @click="show_page5_bg2()">
+						<img class="hide bg2" src="images/page5/bg2.jpg" :class="{show:page5.show_bg2}">
+						<img class="hide product" src="images/page5/product.png" :class="{show:page5.show_product}">
+					</div>
+					<div class="swiper-slide page6">
+						<img class="hide text" src="images/page6/text.png" :class="{show:page6.show_text}">
+						<img class="hide button" @click="slideNext()" src="images/page6/button.png" :class="{show:page6.show_button}">
+					</div>
+					<div class="swiper-slide page7">
+						<img class="text hide" src="./images/page7/text.png" :class="{show:page7.show_text}">
+						<img class="bubble bubble1 hide" @click="page8.active_index=2,slideNext()" src="./images/page7/bubble1.png" :class="{show:page7.show_bubble}">
+						<img class="bubble bubble2 hide" @click="page8.active_index=3,slideNext()" src="./images/page7/bubble2.png" :class="{show:page7.show_bubble}">
+						<img class="bubble bubble3 hide" @click="page8.active_index=1,slideNext()" src="./images/page7/bubble3.png" :class="{show:page7.show_bubble}">
+						<img class="bubble hand hide" src="./images/page7/hand.png" :class="{show:page7.show_hand}">
+					</div>
+					<div class="swiper-slide page8">
+						<!-- 电视 -->
+						<div class="scene scene1 hide" :class="{show:page8.active_index==1}">
+							<i class="sound">
+								<b :class="{animation_sound:page8.scene1.show_sound}"></b>
+							</i>
+							<img class="bubble" src="./images/page8/scene1/bubble.png" :class="{bubble_show:page8.scene1.show_bubble}">
+							<button class="button button_volume" @click="page_8('button_volume')" :class="{button_volume_active:page8.scene1.active_index==1}"></button>
+							<button class="button button_pause" @click="page_8('button_pause')" :class="{button_pause_active:page8.scene1.active_index==2}"></button>
+							<button class="button button_cctv5" @click="page_8('button_cctv5')" :class="{button_cctv5_active:page8.scene1.active_index==4}"></button>
+							<button class="button button_pseed" @click="page_8('button_pseed')" :class="{button_pseed_active:page8.scene1.active_index==3}"></button>
+							<div class="video">
+								<img class="tv" src="./images/page8/scene1/tv.png">
+								<img class="cctv5 hide" style="z-index:1;" src="./images/page8/scene1/cctv5.png" :class="{show:page8.scene1.show_cctv5}">
+								<img class="icon volume hide2" src="./images/page8/scene1/volume.png" :class="{volume_show:page8.scene1.icon_active_index==1}">
+								<img class="icon pause hide2" src="./images/page8/scene1/pause.png" :class="{show:page8.scene1.icon_active_index==2}">
+								<img class="icon pseed hide2" src="./images/page8/scene1/speed.png" :class="{show:page8.scene1.icon_active_index==3}">
+							</div>
+						</div>
+						<!-- 视频  -->
+						<div class="scene scene2 hide" :class="{show:page8.active_index==2}">
+							<img class="tv hide" src="./images/page8/scene2/tv.png" :class="{show:page8.scene2.show_tv_index==0}">
+							<img class="tv tv1 hide" src="./images/page8/scene2/tv1.png" :class="{show:page8.scene2.show_tv_index==1}">
+							<img class="tv tv2 hide" src="./images/page8/scene2/tv2.png" :class="{show:page8.scene2.show_tv_index==2}">
+							<img class="bg hide2" src="./images/page8/scene2/bg1.jpg" :class="{show:page8.scene2.active_index==1}">
+							<img class="bg hide2" src="./images/page8/scene2/bg2.jpg" :class="{show:page8.scene2.active_index==2}">
+							<!-- <img class="text" src="./images/page8/scene2/text.png"> -->
+							<i class="sound">
+								<b :class="{animation_sound:page8.scene2.show_sound}"></b>
+							</i>
+							<img class="bubble" src="./images/page8/scene2/bubble.png" :class="{bubble_show:page8.scene2.show_bubble}">
+							<button class="button button_mama" @click="page_8('button_mama')" :class="{button_mama_active:page8.scene2.active_index==1}"></button>
+							<button class="button button_yisheng" @click="page_8('button_yisheng')" :class="{button_yisheng_active:page8.scene2.active_index==2}"></button>
+						</div>
+						<!-- 小帮手 -->
+						<div class="scene scene3 hide" :class="{show:page8.active_index==3}">
+							<i class="sound">
+								<b :class="{animation_sound:page8.scene3.show_sound}"></b>
+							</i>
+							<img class="music_icon_ hide" :class="{show:page8.scene3.icon_active_index==3}" src="./images/page8/scene3/music_icon.png">
+							<img class="bubble" src="./images/page8/scene1/bubble.png" :class="{bubble_show:page8.scene3.show_bubble}">
+							<i class="jiashiqi" :class="{jiashiqi_active:page8.scene3.show_jiashiqi}"></i>
+							<img class="kongtiao" :src="page8.scene3.show_kongtiao"  alt="picture">
+							<img class="yizi" src="./images/page8/scene3/yizi.png">
+							<button class="button button_jiashiqi" @click="page_8('button_jiashiqi')" :class="{button_jiashiqi_active:page8.scene3.active_index==5}"></button>
+							<button class="button button_tianqi" @click="page_8('button_tianqi')" :class="{button_tianqi_active:page8.scene3.active_index==1}"></button>
+							<button class="button button_tonghua" @click="page_8('button_tonghua')" :class="{button_tonghua_active:page8.scene3.active_index==2}"></button>
+							<button class="button button_kongtiao" @click="page_8('button_kongtiao')" :class="{button_kongtiao_active:page8.scene3.active_index==6}"></button>
+							<button class="button button_music" @click="page_8('button_music')" :class="{button_music_active:page8.scene3.active_index==3}"></button>
+							<button class="button button_naozhong" @click="page_8('button_naozhong')" :class="{button_naozhong_active:page8.scene3.active_index==4}"></button>
+							<div class="video">
+								<img class="hide2 tv" src="./images/page8/scene3/tv.png" :class="{show:page8.scene3.icon_active_index==0}">
+								<img class="hide2 tv" src="./images/page8/scene3/tv_tianqi.png" :class="{show:page8.scene3.icon_active_index==1}">
+								<img class="hide2 tv" src="./images/page8/scene3/tv_tonghua.png" :class="{show:page8.scene3.icon_active_index==2}">
+								<img class="hide2 tv" src="./images/page8/scene3/tv_music.png" :class="{show:page8.scene3.icon_active_index==3}">
+								<img class="hide2 tv" src="./images/page8/scene3/tv_naozhong.png" :class="{show:page8.scene3.icon_active_index==4}">
+							</div>
+						</div>
+					</div>
+					<div class="swiper-slide page9">
+						<div class="page p12">
+							<img src="images/page12/1.jpg" />
+							<div class="p12_img1" :class="{p12_img1_animation:page9.start}"></div>
+							<div class="p12_img2" @click="slideNext()" :class="{p12_img2_animation:page9.btn}"></div>
+							<div class="p12_img3" :class="{p12_img3_animation:page9.btn}"></div>
+						</div>
+					</div>
+					<div class="swiper-slide page10">
+						<div class="page p13">
+							<img src="images/page12/5.jpg" />
+							<div class="p13_img1" :class="{p13_img1_animation:page10.start}"></div>
+						</div>
+					</div>
+					<div class="swiper-slide page11">
+						<div class="page p14">
+							<img src="images/page13/1.jpg" />
+							<div class="p14_img1" :class="{p14_img1_animation:page11.start}"></div>
+							<div class="p14_img2" :class="{p14_img2_animation:page11.product}"></div>
+						</div>
+					</div>
+					<div class="swiper-slide page12">
+						<div class="page p15">
+							<img src="images/page13/4.jpg" />
+							<div class="p15_img1" :class="{p15_img1_animation:page12.start}"></div>
+							<div class="p15_img2" :class="{p15_img2_animation:page12.product}"></div>
+							<div class="p15_img3" :class="{p15_img3_animation:page12.product}"></div>
+							<div class="p15_img4" :class="{p15_img4_animation:page12.product}"></div>
+						</div>
+					</div>
+					<div class="swiper-slide page13">
+						<div class="page p16">
+							<img src="images/page13/9.jpg" />
+							<div class="p16_img1" :class="{p16_img1_animation:page13.start}"></div>
+							<div class="p16_img2" :class="{p16_img2_animation:page13.product}"></div>
+							<div class="p16_img3" :class="{p16_img3_animation:page13.product}"></div>
+							<div class="p16_img4" :class="{p16_img4_animation:page13.product}"></div>
+						</div>
+					</div>
+					<div class="swiper-slide page14">
+						<div class="page p17">
+							<img src="images/page14/2.jpg" />
+							<div class="p17_img1" :class="{p17_img1_animation:page14.start}"></div>
+							<div class="p17_img2" :class="{p17_img2_animation:page14.logo}"></div>
+							<div class="p17_btn" :class="{p17_btn_animation:page14.btn}">
+								<div class="p17_img3" @click="page14.share=true"></div>
+								<div class="p17_img4" @click="review()"></div>
+								<div class="p17_img5" @click="amazing()"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <audio src="music/bgm.mp3" id="audio" autoplay="autoplay" preload="preload" loop="loop"></audio> -->
+		</main>
+		<script src="js/swiper.min.js"></script>
+		<script src="js/preloadjs.js"></script>
+		<script src="js/soundjs.min.js"></script>
+		<script src="js/vue.js"></script>
+		<script src="js/static.js"></script>
+	</body>
+
+</html>
